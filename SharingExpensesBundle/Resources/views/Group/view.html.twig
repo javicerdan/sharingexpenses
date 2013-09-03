@@ -1,0 +1,39 @@
+{% extends "JavicodeSharingExpensesBundle::layout.html.twig" %}
+
+{% block title "Sharing expenses" %}
+
+{% block content %}
+    <h2>{{ group.getName }}</h2>
+    <a class="pure-button float-right"  href="{{ path('edit_group', {'id': group.id }) }}">Edit</a>
+    <br />
+    <h2>People in this group</h2>
+
+    {% for user in group.getUsers %}
+        <h3>{{ user.getUsername }}</h3>
+        {% render(controller("JavicodeSharingExpensesBundle:User:newExpense",
+            {'group_id': group.id, 'user_id': user.id})) %}
+        <br />
+        Credit: {{user.amountSpentInGroup(group.id) -  group.minSpentAmountFromUsers }}
+        <br />
+    {% endfor %}
+    <br />
+    <strong>Total expenses: {{ group.getTotalExpenses }}</strong>
+    <br />
+    History:
+    <br />
+    {% if(group.getExpenses|length > 0) %}
+        <table class="pure-table">
+            <tr>
+                <th>Paid for</th><th>Price</th><th>By</th><th>Comments</th>
+            </tr>
+        {% for expense in group.expensesNewestFirst %}
+            <tr>
+                <td>{{ expense.name }}</td>
+                <td>{{ expense.price }}</td>
+                <td>{{ expense.getUser.getUsername }}</td>
+                <td>{{ expense.description }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

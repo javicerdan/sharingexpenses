@@ -1,0 +1,14 @@
+{% if error %}
+    <div>{{ error.message }}</div>
+{% endif %}
+<form class="pure-form pure-form-stacked" action="{{ path('login_check') }}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="_password"/>
+    <label for="remember_me" class="pure-checkbox">
+        <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+        Keep me logged in</label>
+    <input type="submit" class="pure-button pure-button-primary" name="login"/>
+</form>

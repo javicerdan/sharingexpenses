@@ -1,0 +1,168 @@
+<?php
+
+namespace Javicode\SharingExpensesBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * SharingGroup
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Javicode\SharingExpensesBundle\Entity\SharingGroupRepository")
+ */
+class SharingGroup
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="sharing_groups", cascade={"persist"})
+     */
+    private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Expense", mappedBy="sharing_group")
+     */
+    private $expenses;
+
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \Javicode\SharingExpensesBundle\Entity\User $users
+     * @return SharingGroup
+     */
+    public function addUser(\Javicode\SharingExpensesBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Javicode\SharingExpensesBundle\Entity\User $users
+     */
+    public function removeUser(\Javicode\SharingExpensesBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Add expenses
+     *
+     * @param \Javicode\SharingExpensesBundle\Entity\Expense $expenses
+     * @return SharingGroup
+     */
+    public function addExpense(\Javicode\SharingExpensesBundle\Entity\Expense $expenses)
+    {
+        $this->expenses[] = $expenses;
+
+        return $this;
+    }
+
+    /**
+     * Remove expenses
+     *
+     * @param \Javicode\SharingExpensesBundle\Entity\Expense $expenses
+     */
+    public function removeExpense(\Javicode\SharingExpensesBundle\Entity\Expense $expenses)
+    {
+        $this->expenses->removeElement($expenses);
+    }
+
+    /**
+     * Get expenses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpenses()
+    {
+        return $this->expenses;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return SharingGroup
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param User $user
+     * @return bool true if user belongs to this group
+     */
+    public function doesUserBelongToThisGroup(User $user)
+    {
+        return $this->users->contains($user);
+    }
+
+    /**
+     * @return array Emails from the users of this group
+     */
+    public function getUsersEmails()
+    {
+        $users_emails = array();
+        foreach($this->getUsers() as $user){
+            $users_emails[] = $user->getEmail();
+        }
+        return $users_emails;
+    }
+}

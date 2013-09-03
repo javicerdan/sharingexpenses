@@ -1,0 +1,17 @@
+<div class="user-expense">
+    <form action="{{ path('new_expense', {'user_id': user_id, 'group_id': group_id }) }}"
+          class="pure-form pure-form-aligned" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        {{ form_row (form._token) }}
+        <div class="pure-control-group">
+            {{ form_widget(form.price, {'attr':{'class': 'pure_input_1', 'placeholder': form.price.vars.name}}) }}
+        </div>
+        <div class="pure-control-group">
+            {{ form_widget(form.name, {'attr': {'class': 'pure_input_1', 'placeholder': form.name.vars.name}}) }}
+        </div>
+        <div class="pure-control-group">
+            {{ form_widget(form.description, {'attr': {'class': 'pure-input-1', 'placeholder': form.description.vars.name}}) }}
+        </div>
+        {{ form_widget(form.save, {'attr': {'class': 'pure-button pure-button-primary'}}) }}
+    </form>
+</div>

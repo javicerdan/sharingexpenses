@@ -1,0 +1,21 @@
+{% extends "JavicodeSharingExpensesBundle::layout.html.twig" %}
+
+{% block content %}
+    <h2>What's this?</h2>
+
+    <p>Sharing expenses is an easy way to keep track of the expenses in a group. Let's say Alice, Bob and Claire share
+    a flat. There are some common expenses that have to be shared. Usually this is how it'd work:</p>
+
+    <p>Alice: I paid for the Internet! You two owe me £12.5<br />
+    Bob: I bought groceries for the dinner. You two owe me £6.5<br />
+    Claire: Whatever. I'll pay you both when I can.<br />
+    Alice: Claire, you never pay on t...<br />
+    Claire: STFU! I said I'll pay and I'll pay.<br />
+    Bob: Relax. There is no need to...<br />
+    Claire: Don't tell me to relax! I'M RELAXED!</p>
+
+    <p>Instead of this nasty but common incident, Alice and Bob can just log what they paid. The amount they paid
+    is transformed into 'credit', so the person with the least credit should be the next one spending
+    on common expenses.</p>
+
+{% endblock %}    

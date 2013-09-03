@@ -1,0 +1,13 @@
+
+
+services:
+  acme_demo.type.issue_selector:
+    class: Javicode\SharingExpensesBundle\Form\Type\UserEmailType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: user_email }
+
+  group_controller:
+    class: Javicode\SharingExpensesBundle\Controller\GroupController
+    tags:
+      - { name: security.secure_service }

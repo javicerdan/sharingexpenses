@@ -1,0 +1,10 @@
+<h3>New? Register now!</h3>
+
+{{ form_start(form, {'attr': {'class': 'pure-form pure-form-stacked'} }) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.username) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.save, {'attr': {'class':'pure-button pure-button-primary'} }) }}
+{{ form_end(form) }}

@@ -1,0 +1,64 @@
+{% extends "JavicodeSharingExpensesBundle::layout.html.twig" %}
+
+{% block content %}
+    {{ form_start(form, {'attr': {'class': 'pure-form pure-form-aligned'}}) }}
+        <div class="pure-control-group">
+            {{ form_row(form.name) }}
+        </div>
+
+        {# store the prototype on the data-prototype attribute #}
+        <div id="email-fields-list" class="border-none" data-prototype="{{ form_widget(form.users.vars.prototype) | e }}">
+            {% for emailField in form.users %}
+                {{ form_errors(emailField) }}
+                <div class="pure-control-group">
+                    {# if it's the user's email, display it as read only #}
+                    <label>Email</label>
+                    {% if (emailField.vars.value == app.user.email) %}
+                        {{ form_widget(emailField, {'attr': {'readonly': true }}) }}
+                    {% else %}
+                        {{ form_widget(emailField) }}
+                        <p class="pure-button erase-button">Erase this user</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="pure-controls">
+            <a href="#" class="pure-button pure-button-primary" id="add-another-email">Add another user</a>
+        </div>
+        <div class="pure-controls">
+            {{ form_row(form.save, {'attr':{'class': 'pure-button pure-button-primary'}}) }}
+        </div>
+    {{ form_end(form) }}
+
+    <script type="text/javascript">
+        // keep track of how many email fields have been rendered
+        var emailCount = '{{ form.users | length }}';
+        jQuery(document).ready(function () {
+            jQuery('#add-another-email').click(function () {
+                var emailList = jQuery('#email-fields-list');
+                // grab the prototype template
+                var newWidget = emailList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__/g, emailCount);
+                emailCount++;
+                // create a new list element and add it to the list
+                var newLi = jQuery('#email-fields-list').
+                        append('<div class="pure-control-group"><label>Email</label>'
+                                +newWidget+
+                                '<p class="pure-button erase-button">Erase this user</p></div>');
+                newLi.appendTo(emailList);
+                return false;
+            });
+            //Using 'on' attached to 'document' so dynamically added fields also trigger the event
+            jQuery(document).on('click', '.erase-button', function() {
+                //Erase field when erase button pressed
+                jQuery(this).parent().remove();
+                this.remove();
+                return false;
+            })
+        })
+    </script>
+
+{% endblock %}

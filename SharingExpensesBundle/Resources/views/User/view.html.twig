@@ -1,0 +1,12 @@
+{% extends "JavicodeSharingExpensesBundle::layout.html.twig" %}
+
+    {% block content %}
+        <h2>Your profile</h2>
+        <h3>{{ app.user.username }}</h3>
+
+        <h2>Groups:</h2>
+        <br />
+        {% for group in app.user.sharingGroups %}
+            <a class="pure-button" href="{{ path('view_group', {'id': group.id}) }}">{{ group.name }}</a>
+        {% endfor %}
+    {% endblock %}

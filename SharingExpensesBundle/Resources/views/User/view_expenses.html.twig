@@ -1,0 +1,6 @@
+Your last expenses:
+<ul>
+    {% for expense in app.user.expenses %}
+        <li>£{{ expense.price }} in <em>{{ expense.name }}</em> for {{ expense.sharinggroup.name }} group.</li>
+    {% endfor %}
+</ul>

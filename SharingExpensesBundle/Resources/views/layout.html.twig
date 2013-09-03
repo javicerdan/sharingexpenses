@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}"/>
+    <meta name="robots" content="noindex,nofollow" />
+    <title>{% block title %}Sharing Expenses{% endblock %}</title>
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}"/>
+    {% stylesheets '@JavicodeSharingExpensesBundle/Resources/public/css/*' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <script src="{{ asset('bundles/javicodesharingexpenses/js/jquery-2.0.3.min.js') }}"></script>
+</head>
+<body class="pure-skin-se">
+    {% block body %}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="flash-message">
+                <em>Notice</em>: {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        {% block content_header %}
+            <div id="header" class="block">
+                <h1>Sharing Expenses</h1>
+                <div class="pure-menu pure-menu-open pure-menu-horizontal">
+                    <ul>
+                        {% block content_header_more %}
+                        {% endblock %}
+                        <li class="pure-menu-selected"><a href="{{ path('index') }}">Home</a></li>
+                        {% if app.user %}
+                            <li><a href="{{ path('view_user') }}">View profile</a></li>
+                            {% for group in app.user.sharingGroups|slice(0,5) if group.id %}
+                                <li><a href="{{ path('view_group', {'id': group.id }) }}">Group {{ group.name }}</a></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><a href="{{ path('login') }}">Login</a></li>
+                            <li><a href="{{ path('new_user') }}">Register</a></li>
+                        {% endif %}
+                        <li><a href="{{ path('logout') }}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+        {% endblock %}
+
+        <div class="block">
+            <div id="sidebar">
+                {% block sidebar %}
+                    {% if app.user %}
+                        <h3> Welcome {{ app.user.username }}!</h3>
+                        <a class="pure-button pure-button-primary" href="{{ path('new_group') }}"> Create new group</a>
+                        <br />
+                        {% render(controller("JavicodeSharingExpensesBundle:User:lastExpenses")) %}
+                    {% else %}
+                        <h3>Login</h3>
+                        {% render(controller("JavicodeSharingExpensesBundle:Default:login")) %}
+                        <br />
+                        {% render(controller("JavicodeSharingExpensesBundle:User:new")) %}
+                    {% endif %}
+                {% endblock %}
+            </div>
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+</body>

@@ -1,0 +1,87 @@
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+body {
+    font-size: 14px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+    color: #313131;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+h1, h2, h3 {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+    color: #404040;
+}
+
+h1 {
+    font-size: 45px;
+    padding-bottom: 30px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: inline-block;
+    text-transform: uppercase;
+}
+h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 14px;
+    line-height: 20px;
+    padding-bottom: 20px;
+}
+
+.block{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #dfdfdf;
+    padding: 40px 50px;
+}
+#header{
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+}
+
+
+#sidebar{
+    width: 180px;
+    height: 100%;
+    float:right;
+}
+.content{
+    margin-right: 200px;
+    border-right: 1px dashed #000000;
+    padding-right: 15px;
+    min-height: 700px;
+}
+
+.float-right{
+    float: right;
+    margin: 15px;
+}
+.border-none{
+    border:0px;
+    padding:0px;
+}
